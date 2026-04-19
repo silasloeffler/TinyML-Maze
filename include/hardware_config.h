@@ -1,0 +1,20 @@
+#ifndef HARDWARE_CONFIG_H
+#define HARDWARE_CONFIG_H
+
+/**
+ * @file hardware_config.h
+ * @brief Board-level hardware initialization for the STM32F401 project.
+ * @author Silas Loeffler
+ */
+
+#include "stm32f4xx_hal.h"
+
+void SystemClock_Config(void);
+void MX_GPIO_Init(void);
+void MX_ADC1_Init(void);
+void MX_TIM2_Init(void);
+void MX_USART2_UART_Init(void);
+void MX_I2C1_Init(void);
+void Error_Handler(void);
+
+#endif
