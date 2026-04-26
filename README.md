@@ -14,7 +14,6 @@ TinyML Maze is a fully offline embedded system that allows users to navigate a d
 * **Interactive Game Engine:** A deterministic state machine written in C that translates AI predictions into player movements on a mapped OLED display.
 
 ![User Experience/Fallback](assets/ux.gif)
-![Spectrogtam](assets/spectrogram.png)
 
 ## 🛠️ Hardware Requirements
 
@@ -22,7 +21,6 @@ TinyML Maze is a fully offline embedded system that allows users to navigate a d
 * **Microphone:** MAX9814 (Electret microphone with built-in Automatic Gain Control to normalize voice inputs)
 * **Display:** 0.96" SSD1306 OLED (I2C)
 
-![Hardware/Fallback](assets/circuit_board.JPEG)
 ![Soldering](assets/soldering.jpg)
 
 ## 💻 Software Stack & Toolchain
@@ -38,6 +36,8 @@ This project is built and managed using PlatformIO.
 ```bash
 pio run
 pio run --target upload
+
+```
 
 ## 👨‍💻 Author
 
