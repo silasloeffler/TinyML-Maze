@@ -1,27 +1,45 @@
-# Mini Speech
+# TinyML Maze 🎙️🕹️
 
-Voice-controlled TinyML maze game for the STM32F401RE with OLED output, audio preprocessing, and a small command classifier.
+**Real-Time Voice Recognition and Edge AI on a Microcontroller**
 
-## Overview
+![Final Product/Fallback](assets/final_product.JPEG)
 
-- Captures microphone input with the ADC and processes it through STFT-based features.
-- Runs a 5-class TinyML model for the commands `down`, `left`, `random`, `right`, and `up`.
-- Uses an SSD1306 OLED to show the maze, score bars, and status screens.
-- Organizes the firmware into separate modules for display, game logic, hardware setup, and the AI wrapper.
+TinyML Maze is a fully offline embedded system that allows users to navigate a digital maze using voice commands. Built on the heavily resource-constrained STM32F401RE, this project demonstrates the entire pipeline of deploying a Convolutional Neural Network (CNN) directly on edge hardware – from data collection to real-time inference.
 
-## Build And Upload
+## 🚀 Key Features
 
-This project is built with PlatformIO.
+* **Always-On Voice Activity Detection (VAD):** Efficient amplitude monitoring using a moving average filter. Features a pre-roll ring buffer to capture the crucial first milliseconds of a spoken word, preventing data loss before the inference triggers.
+* **On-Device Signal Processing:** Real-time calculation of 2D spectrograms from raw microphone data using Short-Time Fourier Transforms (STFT) via the CMSIS-DSP library.
+* **Optimized Edge AI:** A custom-trained 5-class CNN (`up`, `down`, `left`, `right`, `random`). The model underwent Post-Training Quantization (PTQ) to INT8, drastically reducing its size to fit within the MCU's 96 KB of SRAM.
+* **Interactive Game Engine:** A deterministic state machine written in C that translates AI predictions into player movements on a mapped OLED display.
+
+![User Experience/Fallback](assets/ux.gif)
+![Spectrogtam](assets/spectrogram.png)
+
+## 🛠️ Hardware Requirements
+
+* **Microcontroller:** STM32 Nucleo-F401RE (ARM Cortex-M4, 84 MHz, 512 KB Flash, 96 KB SRAM)
+* **Microphone:** MAX9814 (Electret microphone with built-in Automatic Gain Control to normalize voice inputs)
+* **Display:** 0.96" SSD1306 OLED (I2C)
+
+![Hardware/Fallback](assets/circuit_board.JPEG)
+![Soldering](assets/soldering.jpg)
+
+## 💻 Software Stack & Toolchain
+
+* **Machine Learning:** Python, TensorFlow / Keras (Google Colab)
+* **Code Generation:** STM32CubeMX with the X-CUBE-AI expansion
+* **Firmware Development:** C, PlatformIO (VS Code), CMSIS-DSP
+
+## ⚙️ Build and Upload
+
+This project is built and managed using PlatformIO.
 
 ```bash
 pio run
 pio run --target upload
-```
 
-## Author
+## 👨‍💻 Author
 
-Silas Loeffler, assisted by GitHub Copilot.
-
-## Notes
-
-The full written report can be summarized here later as a shorter project description.
+**Silas Löffler**, assisted by GitHub Copilot.
+*First-Year Project - Artificial Intelligence and Cognitive Systems (B.Sc.) @ Hochschule Ansbach*
