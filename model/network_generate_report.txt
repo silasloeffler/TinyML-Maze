@@ -1,0 +1,205 @@
+ST Edge AI Core v2.2.0-20266 2adc00962
+Created date          : 2026-05-10 18:23:29
+Parameters            : generate --target stm32f4 --name network -m D:/Studium/4. Semester/Erstjahresprojekt/TinyML/Code/TinyML Maze/model/model_int8_final.tflite --compression none --verbosity 1 --workspace C:/Users/silas/AppData/Local/Temp/mxAI_workspace96003334074410012183425549576495226 --output C:/Users/silas/.stm32cubemx/network_output
+
+Exec/report summary (generate)
+-------------------------------------------------------------------------------------------------------------------------------------
+model file         :   D:\Studium\4. Semester\Erstjahresprojekt\TinyML\Code\TinyML Maze\model\model_int8_final.tflite                
+type               :   tflite                                                                                                        
+c_name             :   network                                                                                                       
+compression        :   none                                                                                                          
+options            :   allocate-inputs, allocate-outputs                                                                             
+optimization       :   balanced                                                                                                      
+target/series      :   stm32f4                                                                                                       
+workspace dir      :   C:\Users\silas\AppData\Local\Temp\mxAI_workspace96003334074410012183425549576495226                           
+output dir         :   C:\Users\silas\.stm32cubemx\network_output                                                                    
+model_fmt          :   sa/sa per tensor                                                                                              
+model_name         :   model_int8_final                                                                                              
+model_hash         :   0xbce30d318bb7171d927a880fd1e7d425                                                                            
+params #           :   205,701 items (201.13 KiB)                                                                                    
+-------------------------------------------------------------------------------------------------------------------------------------
+input 1/1          :   'serving_default_keras_tensor0', int8(1x124x129x1), 15.62 KBytes, QLinear(0.072825067,62,int8), activations   
+output 1/1         :   'gemm_9', int8(1x5), 5 Bytes, QLinear(0.301823795,26,int8), activations                                       
+macc               :   3,972,405                                                                                                     
+weights (ro)       :   205,956 B (201.13 KiB) (1 segment) / -616,848(-75.0%) vs float model                                          
+activations (rw)   :   22,784 B (22.25 KiB) (1 segment) *                                                                            
+ram (total)        :   22,784 B (22.25 KiB) = 22,784 + 0 + 0                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers are allocated in the activations buffer
+
+Model name - model_int8_final
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+m_id   layer (type,original)                            oshape                  param/size               macc                     connected to   | c_size            c_macc                  c_type         
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+0      serving_default_keras_tensor0 (Input, )          [b:1,h:124,w:129,c:1]                                                                    |                   +4,096(+100.0%)         Resize_[0]     
+       resize_0 (Resize, RESIZE_BILINEAR)               [b:1,h:32,w:32,c:1]                             4,096    serving_default_keras_tensor0   |                   -4,096(-100.0%)         
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+1      conv2d_1 (Conv2D, CONV_2D)                       [b:1,h:30,w:30,c:16]    160/208               129,616                         resize_0   |                                           Conv2D_[1]     
+       nl_1_nl (Nonlinearity, CONV_2D)                  [b:1,h:30,w:30,c:16]                           14,400                         conv2d_1   |                   -14,400(-100.0%)        
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+2      conv2d_2 (Conv2D, CONV_2D)                       [b:1,h:28,w:28,c:32]    4,640/4,736         3,612,704                          nl_1_nl   | -4,736(-100.0%)   -3,612,704(-100.0%)     
+       nl_2_nl (Nonlinearity, CONV_2D)                  [b:1,h:28,w:28,c:32]                           25,088                         conv2d_2   |                   -25,088(-100.0%)        
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+3      pool_3 (Pool, MAX_POOL_2D)                       [b:1,h:14,w:14,c:32]                           25,088                          nl_2_nl   | +4,736(+100.0%)   +3,612,704(+14400.1%)   Conv2D_[2]     
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+7      reshape_7 (Reshape, RESHAPE)                     [b:1,c:6272]                                                                    pool_3   |                                           
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+8      sequential_1_dense_1_MatMul (Placeholder, )      [b:32,c:6272]           200,704/200,704                                                  | +128(+0.1%)       +200,736(+100.0%)       Dense_[3]      
+       sequential_1_dense.._1_BiasAdd (Placeholder, )   [b:32]                  32/128                                                           | -128(-100.0%)                             
+       gemm_8 (Gemm, FULLY_CONNECTED)                   [b:1,c:32]                                    200,736                        reshape_7   |                   -200,736(-100.0%)       
+                                                                                                                   sequential_1_dense_1_MatMul   | 
+                                                                                                                sequential_1_dense.._1_BiasAdd   | 
+       nl_8_nl (Nonlinearity, FULLY_CONNECTED)          [b:1,c:32]                                         32                           gemm_8   |                   -32(-100.0%)            
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+9      sequential_1_dense_1_2_MatMul (Placeholder, )    [b:5,c:32]              160/160                                                          | +20(+12.5%)       +165(+100.0%)           Dense_[o][4]   
+       sequential_1_dense_1_2_BiasAdd (Placeholder, )   [b:5]                   5/20                                                             | -20(-100.0%)                              
+       gemm_9 (Gemm, FULLY_CONNECTED)                   [b:1,c:5]                                         165                          nl_8_nl   |                   -165(-100.0%)           
+                                                                                                                 sequential_1_dense_1_2_MatMul   | 
+                                                                                                                sequential_1_dense_1_2_BiasAdd   | 
+------ ------------------------------------------------ ----------------------- ----------------- ----------- -------------------------------- --- ----------------- ----------------------- -------------- 
+model/c-model: macc=4,011,925/3,972,405 -39,520(-1.0%) weights=205,956/205,956  activations=--/22,784 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : model_int8_final
+c-name                : network
+c-node #              : 5
+c-array #             : 19
+activations size      : 22784 (1 segment)
+weights size          : 205956 (1 segment)
+macc                  : 3972405
+inputs                : ['serving_default_keras_tensor0_output']
+outputs               : ['gemm_9_output']
+
+C-Arrays (19)
+------ -------------------------------------- --------------- ------------------------- ----------- --------- 
+c_id   name (*_array)                         item/size       domain/mem-pool           c-type      comment   
+------ -------------------------------------- --------------- ------------------------- ----------- --------- 
+0      conv2d_1_bias                          16/64           weights/weights           const s32             
+1      conv2d_1_output                        14400/14400     activations/**default**   s8                    
+2      conv2d_1_scratch0                      548/548         activations/**default**   s8                    
+3      conv2d_1_weights                       144/144         weights/weights           const s8              
+4      conv2d_2_bias                          32/128          weights/weights           const s32             
+5      conv2d_2_output                        6272/6272       activations/**default**   s8                    
+6      conv2d_2_scratch0                      6144/6144       activations/**default**   s8                    
+7      conv2d_2_scratch1                      1792/1792       activations/**default**   s8                    
+8      conv2d_2_weights                       4608/4608       weights/weights           const s8              
+9      gemm_8_bias                            32/128          weights/weights           const s32             
+10     gemm_8_output                          32/32           activations/**default**   s8                    
+11     gemm_8_scratch0                        6432/12864      activations/**default**   s16                   
+12     gemm_8_weights                         200704/200704   weights/weights           const s8              
+13     gemm_9_bias                            5/20            weights/weights           const s32             
+14     gemm_9_output                          5/5             activations/**default**   s8          /output   
+15     gemm_9_scratch0                        57/114          activations/**default**   s16                   
+16     gemm_9_weights                         160/160         weights/weights           const s8              
+17     resize_0_output                        1024/1024       activations/**default**   s8                    
+18     serving_default_keras_tensor0_output   15996/15996     activations/**default**   s8          /input    
+------ -------------------------------------- --------------- ------------------------- ----------- --------- 
+
+C-Layers (5)
+------ ---------------- ---- ------------ --------- -------- ----------------------------------------- ------------------------ 
+c_id   name (*_layer)   id   layer_type   macc      rom      tensors                                   shape (array id)         
+------ ---------------- ---- ------------ --------- -------- ----------------------------------------- ------------------------ 
+0      resize_0         0    Resize       4096      0        I: serving_default_keras_tensor0_output   int8(1x124x129x1) (18)   
+                                                             O: resize_0_output                        int8(1x32x32x1) (17)     
+------ ---------------- ---- ------------ --------- -------- ----------------------------------------- ------------------------ 
+1      conv2d_1         1    Conv2D       129616    208      I: resize_0_output                        int8(1x32x32x1) (17)     
+                                                             S: conv2d_1_scratch0                                               
+                                                             W: conv2d_1_weights                       int8(16x3x3x1) (3)       
+                                                             W: conv2d_1_bias                          int32(16) (0)            
+                                                             O: conv2d_1_output                        int8(1x30x30x16) (1)     
+------ ---------------- ---- ------------ --------- -------- ----------------------------------------- ------------------------ 
+2      conv2d_2         3    Conv2D       3637792   4736     I: conv2d_1_output                        int8(1x30x30x16) (1)     
+                                                             S: conv2d_2_scratch0                                               
+                                                             S: conv2d_2_scratch1                                               
+                                                             W: conv2d_2_weights                       int8(32x3x3x16) (8)      
+                                                             W: conv2d_2_bias                          int32(32) (4)            
+                                                             O: conv2d_2_output                        int8(1x14x14x32) (5)     
+------ ---------------- ---- ------------ --------- -------- ----------------------------------------- ------------------------ 
+3      gemm_8           8    Dense        200736    200832   I: conv2d_2_output                        int8(1x14x14x32) (5)     
+                                                             S: gemm_8_scratch0                                                 
+                                                             W: gemm_8_weights                         int8(32x6272) (12)       
+                                                             W: gemm_8_bias                            int32(32) (9)            
+                                                             O: gemm_8_output                          int8(1x32) (10)          
+------ ---------------- ---- ------------ --------- -------- ----------------------------------------- ------------------------ 
+4      gemm_9           9    Dense        165       180      I: gemm_8_output                          int8(1x32) (10)          
+                                                             S: gemm_9_scratch0                                                 
+                                                             W: gemm_9_weights                         int8(5x32) (16)          
+                                                             W: gemm_9_bias                            int32(5) (13)            
+                                                             O: gemm_9_output                          int8(1x5) (14)           
+------ ---------------- ---- ------------ --------- -------- ----------------------------------------- ------------------------ 
+
+
+
+Number of operations per c-layer
+------- ------ ------------------- ----------- ------------ 
+c_id    m_id   name (type)                 #op         type 
+------- ------ ------------------- ----------- ------------ 
+0       0      resize_0 (Resize)         4,096   smul_s8_s8 
+1       1      conv2d_1 (Conv2D)       129,616   smul_s8_s8 
+2       3      conv2d_2 (Conv2D)     3,637,792   smul_s8_s8 
+3       8      gemm_8 (Dense)          200,736   smul_s8_s8 
+4       9      gemm_9 (Dense)              165   smul_s8_s8 
+------- ------ ------------------- ----------- ------------ 
+total                                3,972,405 
+
+Number of operation types
+---------------- ----------- ----------- 
+operation type             #           % 
+---------------- ----------- ----------- 
+smul_s8_s8         3,972,405      100.0% 
+
+Complexity report (model)
+------ ------------------------------- ------------------------- ------------------------- ------ 
+m_id   name                            c_macc                    c_rom                     c_id   
+------ ------------------------------- ------------------------- ------------------------- ------ 
+0      serving_default_keras_tensor0   |                  0.1%   |                  0.0%   [0]    
+1      conv2d_1                        |                  3.3%   |                  0.1%   [1]    
+3      pool_3                          ||||||||||||||||  91.6%   |                  2.3%   [2]    
+8      sequential_1_dense_1_MatMul     |                  5.1%   ||||||||||||||||  97.5%   [3]    
+9      sequential_1_dense_1_2_MatMul   |                  0.0%   |                  0.1%   [4]    
+------ ------------------------------- ------------------------- ------------------------- ------ 
+macc=3,972,405 weights=205,956 act=22,784 ram_io=0
+ 
+ Requested memory size by section - "stm32f4" target
+ ------------------------------ -------- --------- ------- -------- 
+ module                             text    rodata    data      bss 
+ ------------------------------ -------- --------- ------- -------- 
+ NetworkRuntime1020_CM4_GCC.a     18,892         0       0        0 
+ network.o                           660       708   2,324      168 
+ network_data.o                       48        16      88        0 
+ lib (toolchain)*                      0         0       0        0 
+ ------------------------------ -------- --------- ------- -------- 
+ RT total**                       19,600       724   2,412      168 
+ ------------------------------ -------- --------- ------- -------- 
+ weights                               0   205,960       0        0 
+ activations                           0         0       0   22,784 
+ io                                    0         0       0        0 
+ ------------------------------ -------- --------- ------- -------- 
+ TOTAL                            19,600   206,684   2,412   22,952 
+ ------------------------------ -------- --------- ------- -------- 
+ *  toolchain objects (libm/libgcc*)
+ ** RT AI runtime objects (kernels+infrastructure)
+  
+  Summary - "stm32f4" target
+  --------------------------------------------------
+               FLASH (ro)     %*   RAM (rw)       % 
+  --------------------------------------------------
+  RT total         22,736   9.9%      2,580   10.2% 
+  --------------------------------------------------
+  TOTAL           228,696            25,364         
+  --------------------------------------------------
+  *  rt/total
+
+
+Generated files (7)
+------------------------------------------------------------------ 
+C:\Users\silas\.stm32cubemx\network_output\network_data_params.h   
+C:\Users\silas\.stm32cubemx\network_output\network_data_params.c   
+C:\Users\silas\.stm32cubemx\network_output\network_data.h          
+C:\Users\silas\.stm32cubemx\network_output\network_data.c          
+C:\Users\silas\.stm32cubemx\network_output\network_config.h        
+C:\Users\silas\.stm32cubemx\network_output\network.h               
+C:\Users\silas\.stm32cubemx\network_output\network.c               

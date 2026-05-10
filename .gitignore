@@ -27,5 +27,6 @@ archive/
 test/
 data/
 saved/
+model old/
 pycache/
 .ipynb_checkpoints/
