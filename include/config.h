@@ -32,8 +32,8 @@
 #define OUTPUT_CLASS_COUNT        5U       // Number of output classes predicted by the model.
 
 /* Quantization settings used when writing the STFT output into the model input. */
-#define QUANT_SCALE        0.072971389f    // Quantization scale (1/128) used for the model input.
-#define QUANT_ZERO_POINT  (61)
+#define QUANT_SCALE        0.072825067f    // Quantization scale (1/128) used for the model input.
+#define QUANT_ZERO_POINT  (62)
 
 /* Tile size in pixels for the OLED maze grid. */
 #define TILE_SIZE                  8        // Tile size in pixels for the OLED maze grid.

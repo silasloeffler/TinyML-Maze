@@ -22,7 +22,7 @@ static ai_i8 out_data[AI_NETWORK_OUT_1_SIZE];
 static ai_buffer* network_input = NULL;
 static ai_buffer* network_output = NULL;
 
-static const char* kClassNames[OUTPUT_CLASS_COUNT] = { "RIGHT", "LEFT", "DOWN", "RANDOM", "UP" };
+static const char* kClassNames[OUTPUT_CLASS_COUNT] = { "DOWN", "LEFT", "RANDOM", "RIGHT", "UP" };
 
 static void Network_Log(const char* text) {
     if (text == NULL) {

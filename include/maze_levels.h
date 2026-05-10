@@ -22,8 +22,8 @@ static const uint8_t levels[LEVEL_COUNT][MAZE_HEIGHT][MAZE_WIDTH] = {
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
@@ -55,6 +55,6 @@ static const uint8_t levels[LEVEL_COUNT][MAZE_HEIGHT][MAZE_WIDTH] = {
 /* Starting x-position for each level spawn point. */
 static const uint8_t level_start_x[LEVEL_COUNT] = { 6U, 4U, 4U };
 /* Starting y-position for each level spawn point. */
-static const uint8_t level_start_y[LEVEL_COUNT] = { 2U, 3U, 2U };
+static const uint8_t level_start_y[LEVEL_COUNT] = { 5U, 3U, 2U };
 
 #endif
