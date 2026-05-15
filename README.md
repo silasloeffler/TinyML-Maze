@@ -39,31 +39,31 @@ Note: The modules are typically powered from 3.3V. Check breakout labels (`VCC` 
 
 ## 💻 Software Stack & Toolchain
 
-* **Machine Learning:** Python, TensorFlow/Keras (Google Colab)
-  - Data collection with the `mini_speech_commands` structure, cleanup, and augmentation in Python notebooks.
-  - Training in Keras with validation callbacks; export the best model as SavedModel.
+* **Machine Learning:** 
+  - Data collection with the `speech_commands_dataset` structure and cleanup in Python notebooks.
+  - Preprocessing and data augmentation with own examples and backround noise (Audacity)
+  - Train the CNN (TensorFlow) in Google Colab with validation callbacks; export the best model as SavedModel.
   - Post-training quantization (INT8) with the TensorFlow Lite converter.
-* **Code Generation & Integration:** STM32CubeMX + X-CUBE-AI
-  - Generate C code from the quantized TFLite model (X-CUBE-AI) and integrate `network.c`/`network_wrapper.c`.
-* **Firmware Development & DSP:** C, PlatformIO (VS Code), CMSIS-DSP
+* **Code Generation & Integration:** 
+  - Analyze size in the X-CUBE-AI extension of STM32CubeMX in order to fit on the controller
+  - Generate C code from the quantized TFLite model and integrate `network.c`/`network_wrapper.c`.
+* **Firmware Development & DSP:**
+  - Developing Gamelogic and preprocessing steps in C (VS-Code) using the CMSIS-DSP 
+  - Flash to ST32f402re nucleo board via PlatformIO
   - Real-time preprocessing: ADC samples -> STFT -> 2D spectrogram (CMSIS-DSP).
   - Inference with the generated AI runtime, post-processing, and UI update on SSD1306.
-
-Visual pipeline (high-level):
-
-1. Data collection (wav) -> 2. Preprocessing and augmentation -> 3. Train CNN (Keras) -> 4. Quantize to TFLite INT8 -> 5. X-CUBE-AI codegen -> 6. Flash to Nucleo (PlatformIO)
 
 ![Spectrogram](assets/spectrogram.png)
 
 ## 📊 Training Results
 
-The training curves show steady convergence with validation accuracy stabilizing around ~88-90% after the first few epochs, while loss continues to decrease without severe overfitting.
+The training curves show steady convergence with validation accuracy stabilizing around ~90% after the first few epochs, while loss continues to decrease without severe overfitting.
 
 ![Training Metrics](assets/metrics.png)
 
 ## ⚙️ Build and Upload
 
-This project is built and managed using PlatformIO.
+This project is built and managed using VS-Code and PlatformIO.
 
 ```bash
 pio run
